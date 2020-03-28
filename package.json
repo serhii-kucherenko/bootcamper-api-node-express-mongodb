@@ -6,7 +6,7 @@
   "scripts": {
     "start": "NODE_ENV=production node server",
     "dev": "nodemon server",
-    "import-data": "node seeder -i",
+    "seed-data": "node seeder -i",
     "delete-data": "node seeder -d"
   },
   "author": "Sergey Kucherenko",
