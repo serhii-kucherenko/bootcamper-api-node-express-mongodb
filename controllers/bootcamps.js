@@ -1,7 +1,7 @@
 const ErrorResponse = require("../utils/errorResponse");
 const asyncHandler = require("../middleware/async");
 const geocoder = require("../utils/geocoder");
-const { forEach, replace } = require("lodash");
+const { forEach, replace, toInteger } = require("lodash");
 const Bootcamp = require("../models/Bootcamp");
 
 // @decs    Get all bootcamps
@@ -12,7 +12,7 @@ exports.getBootcamps = asyncHandler(async (req, res, next) => {
   let reqQuery = { ...req.query };
 
   // Fields to exclude
-  const removeFields = ["select", "sort"];
+  const removeFields = ["select", "sort", "page", "limit"];
 
   // Loop over removeFields and delete them from
   forEach(removeFields, param => delete reqQuery[param]);
@@ -39,13 +39,40 @@ exports.getBootcamps = asyncHandler(async (req, res, next) => {
     query = query.sort("-createdAt");
   }
 
+  // Pagination
+  const page = toInteger(req.query.page) || 1;
+  const limit = toInteger(req.query.limit, 10) || 100;
+  const startIndex = (page - 1) * limit;
+  const endIndex = page * limit;
+  const total = await Bootcamp.countDocuments();
+
+  query = query.skip(startIndex).limit(limit);
+
   // Executing query
   const bootcamps = await query;
+
+  // Pagination result
+  const pagination = { total };
+
+  if (endIndex < total) {
+    pagination.next = {
+      page: page + 1,
+      limit
+    };
+  }
+
+  if (startIndex > 0) {
+    pagination.prev = {
+      page: page - 1,
+      limit
+    };
+  }
 
   res.status(200).json({
     success: true,
     data: bootcamps,
-    count: bootcamps.length
+    count: bootcamps.length,
+    pagination
   });
 });
 
