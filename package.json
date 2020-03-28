@@ -6,7 +6,7 @@
   "scripts": {
     "start": "NODE_ENV=production node server",
     "dev": "nodemon server",
-    "seed-data": "node seeder -i",
+    "seed-data": "npm run delete-data && node seeder -i",
     "delete-data": "node seeder -d"
   },
   "author": "Sergey Kucherenko",
@@ -15,6 +15,7 @@
     "colors": "^1.4.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "express-fileupload": "^1.1.6",
     "lodash": "^4.17.15",
     "mongoose": "^5.9.6",
     "morgan": "^1.10.0",
