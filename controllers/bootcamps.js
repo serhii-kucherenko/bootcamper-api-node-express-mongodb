@@ -2,7 +2,6 @@ const path = require("path");
 const ErrorResponse = require("../utils/errorResponse");
 const asyncHandler = require("../middleware/async");
 const geocoder = require("../utils/geocoder");
-const { forEach, replace, toInteger } = require("lodash");
 const Bootcamp = require("../models/Bootcamp");
 
 // @decs    Get all bootcamps
