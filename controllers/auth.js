@@ -1,3 +1,4 @@
+const moment = require("moment");
 const ErrorResponse = require("../utils/errorResponse");
 const asyncHandler = require("../middleware/async");
 const User = require("../models/User");
@@ -16,13 +17,7 @@ exports.register = asyncHandler(async (req, res, next) => {
     role
   });
 
-  // Create token
-  const token = user.getSignedJwtToken();
-
-  res.status(200).json({
-    success: true,
-    token
-  });
+  sendTokenResponse(user, 200, res);
 });
 
 // @desc    Login user
@@ -52,11 +47,34 @@ exports.login = asyncHandler(async (req, res, next) => {
     return next(new ErrorResponse("Invalid credentials", 400));
   }
 
+  sendTokenResponse(user, 200, res);
+});
+
+// Get token from model, create cookie and send response
+const sendTokenResponse = (user, statusCode, res) => {
   // Create token
   const token = user.getSignedJwtToken();
 
-  res.status(200).json({
-    success: true,
-    token
-  });
-});
+  const expiresDateFromNow = moment()
+    .add(process.env.JWT_COOKIE_EXPIRE, "days")
+    .format();
+
+  const expires = new Date(expiresDateFromNow);
+
+  const options = {
+    expires,
+    httpOnly: true
+  };
+
+  if (process.env.NODE_ENV === "production") {
+    options.secure = true;
+  }
+
+  res
+    .status(statusCode)
+    .cookie("token", token, options)
+    .json({
+      success: true,
+      token
+    });
+};
