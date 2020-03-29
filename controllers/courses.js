@@ -90,8 +90,6 @@ exports.updateCourse = asyncHandler(async (req, res, next) => {
     );
   }
 
-  console.log(course.user, req.user);
-
   // Make sure user is bootcamp owner
   if (toString(course.user) !== req.user.id && req.user.role !== admin) {
     return next(
