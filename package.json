@@ -6,8 +6,8 @@
   "scripts": {
     "start": "NODE_ENV=production node server",
     "dev": "nodemon server",
-    "seed-data": "npm run delete-data && node seeder -i",
-    "delete-data": "node seeder -d"
+    "seeder": "npm run cleaner && node seeder -i",
+    "cleaner": "node seeder -d"
   },
   "author": "Sergey Kucherenko",
   "license": "MIT",
