@@ -5,6 +5,7 @@ const {
   getMe,
   forgotPassword,
   login,
+  logout,
   register,
   resetPassword,
   updateDetails,
@@ -13,6 +14,7 @@ const {
 
 router.post("/register", register);
 router.post("/login", login);
+router.get("/logout", logout);
 router.post("/forgot-password", forgotPassword);
 router.put("/reset-password/:resettoken", resetPassword);
 router.get("/me", protect, getMe);
