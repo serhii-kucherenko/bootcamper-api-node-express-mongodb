@@ -19,6 +19,7 @@ middlewares(app);
 // Mount routers
 router(app);
 
+// Routes error handler
 app.use(errorHanler);
 
 const PORT = process.env.PORT || 5000;
