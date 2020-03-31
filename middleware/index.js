@@ -4,6 +4,8 @@ const morgan = require("morgan");
 const fileupload = require("express-fileupload");
 const cookieParser = require("cookie-parser");
 const mongoSanitize = require("express-mongo-sanitize");
+const helmet = require("helmet");
+const xss = require("xss-clean");
 
 module.exports = app => {
   // Body parser
@@ -19,6 +21,12 @@ module.exports = app => {
 
   // Sanitize data
   app.use(mongoSanitize());
+
+  // Set security headers
+  app.use(helmet());
+
+  // Prevent XSS attacks
+  app.use(xss());
 
   // File uploading
   app.use(fileupload());
