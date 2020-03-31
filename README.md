@@ -1,6 +1,6 @@
 ## Bootcamper Rest API
 
-## [https://documenter.getpostman.com/view/10920098/SzYYzdUC?version=latest](Documentaions)
+## [Documentaion](https://documenter.getpostman.com/view/10920098/SzYYzdUC?version=latest)
 
 ### Stack:
 
