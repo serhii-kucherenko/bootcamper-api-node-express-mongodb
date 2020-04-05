@@ -2,7 +2,7 @@ require("colors");
 const express = require("express");
 const app = express();
 const dotenv = require("dotenv");
-const errorHanler = require("./middleware/error");
+const errorHandler = require("./middleware/error");
 const connectDB = require("./config/db");
 const router = require("./routes/index");
 const middlewares = require("./middleware/index");
@@ -20,7 +20,7 @@ middlewares(app);
 router(app);
 
 // Routes error handler
-app.use(errorHanler);
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
